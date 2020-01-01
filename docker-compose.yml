@@ -1,0 +1,8 @@
+version: '2.1'
+
+services:
+  blueboard-chat-service:
+    image: blueboard-chat-service
+    build: .
+    environment:
+      NODE_ENV: production
