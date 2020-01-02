@@ -1,7 +1,7 @@
 const { MongoClient } = require("mongodb");
 const dotenv = require("dotenv");
 const { MONGODB_NAME } = require("./config/config");
-const { createGroup, addMembersToGroup, closeGroup } = require("./chat");
+const { createGroup, setRoomMembers, closeGroup } = require("./chat");
 
 dotenv.config();
 
@@ -30,9 +30,13 @@ MongoClient.connect(process.env.MONGODB_URL).then(async client => {
         if (updatedFields && updatedFields["isDeleted"])
             return await handleDeleteEvent(chatRoomId);
 
+        if (!chatRoomId) {
+            return await handleInsertEvent(fullDocument);
+        }
+
         if (updatedFields && updatedFields["users"]) {
             const members = updatedFields["users"].map(({ id }) => id);
-            await addMembersToGroup(chatRoomId, members);
+            return await setRoomMembers(chatRoomId, members);
         }
     };
 
