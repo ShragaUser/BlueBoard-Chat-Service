@@ -6,11 +6,15 @@ const wrappedAxiosPost = trycatch(axios.post);
 const wrappedAxiosGet = trycatch(axios.get);
 
 const login = async () => {
+    if(this.userId && this.authToken)
+        return {userId: this.userId, authToken: this.authToken};
     const { result } = wrappedAxiosPost(`${chatUrl}/${chatLoginUrl}`, { username: loginUser, password: loginPass });
     if (result) {
         if (result.status === "success") {
             const { data } = result;
             const { userId, authToken } = data;
+            this.userId = userId;
+            this.authToken = authToken;
             return { userId, authToken };
         } else {
             console.error(result);

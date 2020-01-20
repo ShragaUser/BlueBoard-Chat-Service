@@ -1,11 +1,11 @@
 const { MongoClient } = require("mongodb");
 const dotenv = require("dotenv");
-const { MONGODB_NAME } = require("./config/config");
+const { MONGODB_NAME, MONGODB_URL } = require("./config/config");
 const { createGroup, setRoomMembers, closeGroup } = require("./chat");
 
 dotenv.config();
 
-MongoClient.connect(process.env.MONGODB_URL).then(async client => {
+MongoClient.connect(MONGODB_URL).then(async client => {
     const db = client.db(MONGODB_NAME);
     const boards = db.collection("boards");
     const boardsCursor = boards.watch();
