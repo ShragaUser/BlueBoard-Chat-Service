@@ -1,6 +1,6 @@
 const { MongoClient } = require("mongodb");
 const dotenv = require("dotenv");
-const { MONGODB_NAME, MONGODB_URL } = require("./config/config");
+const { MONGODB_NAME, MONGODB_URL, GREETING_MSG } = require("./config/config");
 const { createGroup, setRoomMembers, closeGroup, renameGroup, sendMessageToGroup } = require("./chat");
 
 dotenv.config();
